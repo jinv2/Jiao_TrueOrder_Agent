@@ -63,7 +63,7 @@ body::before {
 /* Header & Logo */
 /* 2. 瑞兽横幅：物理对齐与避让 */
 #header {
-    background-image: url('biaotibeijing.jpg');
+    background-image: url('biaotibeijing.webp');
     background-size: cover;
     background-position: center 28%; /* 关键：向下移动 28% 确保露角露头 */
     background-repeat: no-repeat;

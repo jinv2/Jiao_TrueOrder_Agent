@@ -1,5 +1,8 @@
-# 狡 · 真单日报 Agent (V7-Stable)
-> **“见则其国大穰” —— 《山海经·西山经》**
+# 狡 · 真单日报 Agent
+![GitHub stars](https://img.shields.io/github/stars/jinv2/Jiao_TrueOrder_Agent?style=for-the-badge&color=00FFD5&labelColor=0a0a0a)
+![Netlify Status](https://api.netlify.com/api/v1/badges/你的项目ID/deploy-status)
+
+> **“见则其国大穰” —— 瑞兽已降临，嗅探 2026 全网真单。**
 
 ### 🏮 简介
 本工程由 **Shensi-ST Matrix / 天算AI实验室** 架构师主笔，旨在通过“狡”AI 引擎自动化嗅探互联网公开渠道单子。它不仅是一个接单助手，更是 2026 年本地 AI 主权的视觉与逻辑实践。
@@ -20,15 +23,16 @@
 
 #### GitHub 远端挂载
 ```bash
-git remote add origin https://github.com/YOUR_GITHUB_USER/Jiao_TrueOrder_Agent.git
+git remote set-url origin https://github.com/jinv2/Jiao_TrueOrder_Agent.git
 git push -u origin main
 ```
+> **架构师提示**：推送前请确保您已在 [GitHub 新建名为 `Jiao_TrueOrder_Agent` 的仓库](https://github.com/jinv2?tab=repositories) 并完善 `Edit repository details`。
 
 #### Netlify 自动化发版
-1. 登录 Netlify 并在 `Add new site` 中选择 `Import an existing project`。
+1. 登录 [Netlify 项目面板](https://app.netlify.com/teams/jinvbar/projects) 并在 `Add new site` 中选择 `Import an existing project`。
 2. 选择该 GitHub 仓库 `Jiao_TrueOrder_Agent`。
 3. **Build command**：保持为空（原生 HTML/JS 架构）。
 4. **Publish directory**：设置为 `.`（根目录）。
-5. 点击 `Deploy site`，待状态变绿即可访问。
+5. 部署成功后，将主域名映射至：`https://jiao.shensist.top/`。
 
 **Powered by Shensist-Agent Architecture.**
