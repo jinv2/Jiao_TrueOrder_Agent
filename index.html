@@ -1,0 +1,141 @@
+<!--
+  ~ © 2026 Shensi-ST / 天算AI实验室 保留所有权利.
+  ~ 【狡 · 真单日报】接单智能体
+  ~ Architecture V7 / 1.0M Context
+  -->
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>狡 · 真单日报 | Shensi-ST</title>
+    <meta name="description" content="AI 工作流中的忠诚斥候，为您排雷并匹配优质外包真单。">
+    <!-- 引入自定义极简安全样式 -->
+    <link rel="stylesheet" href="style.css">
+    <!-- Font Awesome (Mock for Icons) -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+
+    <div class="app-container">
+        <!-- Header -->
+        <header id="header" class="header">
+            <div class="logo-container">
+                <img src="logo_ts.png" alt="TS Logo">
+            </div>
+            <div class="title-glass-box">
+                <h1 class="main-title">狡 · 真单日报 Agent</h1>
+                <div class="sub-quote">“《山海经·西山经》：玉山有兽，名曰狡。见则其国大穰。”</div>
+            </div>
+            <div style="color: #00FFD5; font-size: 1.2rem; margin-left: auto; text-shadow: 0 0 10px rgba(0, 255, 213, 0.5);">
+                <i class="fa-solid fa-satellite-dish"></i>
+            </div>
+        </header>
+
+        <!-- MCP / API Integration Slot (BYOK) -->
+        <section class="byok-panel">
+            <div class="group-title"><i class="fa-solid fa-brain"></i> 请输入您的 API KEY</div>
+            
+            <select id="aiModelSelect" class="input-field" style="background-color: rgba(255, 255, 255, 0.05); color: var(--text-primary); margin-bottom: 12px; cursor: pointer; appearance: auto;">
+                <option value="gpt4o">🟢 OpenAI GPT-4o</option>
+                <option value="claude35">🟠 Claude 3.5 Sonnet</option>
+                <option value="gemini15">🔵 Google Gemini 1.5 Pro</option>
+                <option value="deepseekv3" selected>🐋 DeepSeek V3</option>
+                <option value="mistral">🟣 Mistral Large</option>
+                <option value="llama31">🦙 Meta Llama 3.1</option>
+                <option value="qwen">☁️ 通义千问 Qwen-Max</option>
+                <option value="ernie">💠 文心一言 4.0</option>
+                <option value="glm4">🌟 智谱 GLM-4</option>
+                <option value="kimi">🌙 Kimi (Moonshot)</option>
+            </select>
+
+            <input type="password" id="apiKey" class="input-field" placeholder="通行密钥（填入您的 AI 密钥以激活高级辅助）">
+            
+            <div style="font-size: 0.75rem; color: var(--text-secondary); margin-top: -4px; margin-bottom: 16px; line-height: 1.5;">
+                <i class="fa-solid fa-circle-info"></i> 如果您没有 AI 密钥，系统将使用【狡】默认的基础嗅探引擎，依然可以正常找单子。
+            </div>
+
+            <div style="text-align: right; margin-bottom: 12px;">
+                <span id="toggleAdvanced" style="font-size: 0.75rem; color: var(--text-secondary); cursor: pointer; transition: color 0.3s; padding: 4px;">
+                    <i class="fa-solid fa-gear"></i> 高级设置：接入自定义搜单节点
+                </span>
+            </div>
+
+            <div id="advancedSettings" style="display: none; margin-bottom: 12px; background: rgba(0,0,0,0.2); padding: 12px; border-radius: 8px;">
+                <input type="text" id="mcpEndpoint" class="input-field" placeholder="备选智能插件地址（可选，用于增强搜单能力）" value="https://api.matrix.link/v1/scout" style="margin-bottom: 0;">
+            </div>
+
+            <div class="glow-box" style="display: flex; align-items: center; justify-content: space-between; background: rgba(255,255,255,0.02); padding: 16px 12px; border-radius: var(--radius-sm); border: 1px solid var(--surface-border); margin-bottom: 0px;">
+                <div style="font-weight: 600; color: var(--text-primary);"><i class="fa-solid fa-radar" style="color: var(--quantum-cyan);"></i> 开启 AI 全网扫描</div>
+                <label class="toggle-switch">
+                    <input type="checkbox" id="aiScanToggle" checked>
+                    <span class="slider" style="background-color: rgba(255, 165, 0, 0.2);"></span>
+                </label>
+            </div>
+        </section>
+
+        <!-- User Profile Form -->
+        <section class="profile-form">
+            <div class="group-title"><i class="fa-solid fa-id-card-clip"></i> 构建能力画像</div>
+            
+            <div class="checkbox-group" id="skillTags">
+                <div class="skill-tag active" data-skill="代码开发">代码开发</div>
+                <div class="skill-tag" data-skill="文案策划">文案策划</div>
+                <div class="skill-tag" data-skill="视觉设计">视觉设计</div>
+                <div class="skill-tag" data-skill="线下服务">线下服务</div>
+                <div class="skill-tag" data-skill="翻译教育">翻译教育</div>
+                <div class="skill-tag" data-skill="行政商务">行政商务</div>
+                <div class="skill-tag active" data-skill="零门槛兼职">零门槛兼职</div>
+            </div>
+
+            <div style="margin-bottom: 24px; text-align: center;">
+                <div style="font-size: 0.95rem; font-weight: 600; color: var(--text-secondary); margin-bottom: 8px;">【我想每天挣 (￥)】</div>
+                <input type="number" id="budgetInput" class="input-field" step="100" placeholder="0" value="1" style="text-align: center; font-size: 1.1rem; font-weight: bold; color: var(--scout-yellow);">
+                <div style="font-size: 0.75rem; color: var(--text-secondary); margin-top: 8px; opacity: 0.8;">
+                    💡 建议：填 1 即可全量搜寻（包括几块钱的零门槛单子）
+                </div>
+            </div>
+
+            <button class="btn-primary" id="startScoutBtn" style="background: linear-gradient(135deg, #ff7e5f, #ff6b6b); border: none; box-shadow: 0 4px 15px rgba(255, 107, 107, 0.4); display: flex; flex-direction: column; align-items: center; padding: 12px 0;">
+                <div style="font-size: 1.2rem; font-weight: bold; display: flex; align-items: center; gap: 8px;">🔥 <span id="btnText">马上找活干</span></div>
+                <div style="font-size: 0.75rem; opacity: 0.85; margin-top: 4px; font-weight: normal;">唤醒瑞兽，开启大穰（丰收）模式。</div>
+                <div class="loader" id="btnLoader" style="display: none; margin-top: 8px;"></div>
+            </button>
+        </section>
+
+        <!-- Results Dashboard -->
+        <section class="dashboard-wrapper">
+            <div class="group-title" style="margin-bottom: 12px; display: none;" id="dashboardTitle"><i class="fa-solid fa-bolt"></i> 猎物看板 (匹配度 > 85%)</div>
+            <div class="dashboard" id="orderDashboard">
+                <!-- Orders will be dynamically injected here via app.js -->
+            </div>
+        </section>
+
+    </div>
+
+    <!-- Order Details Modal (Dark Geek-style) -->
+    <div id="order-modal" class="modal-backdrop" style="z-index: 9999;">
+        <div class="modal-content">
+            <button class="modal-close" id="closeModalBtn"><i class="fa-solid fa-xmark"></i></button>
+            <div class="modal-header">
+                <i class="fa-solid fa-satellite-dish" style="color: var(--quantum-cyan); font-size: 1.5rem;"></i>
+                <div class="modal-title" id="modalTitle">详情解密</div>
+            </div>
+            <div class="modal-body" id="modalBody">
+                <!-- Dynamic Content injected by app.js -->
+            </div>
+            <div class="modal-footer" id="modalFooter">
+                <!-- Action Buttons injected by app.js -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Global Compliance Footer -->
+    <footer style="text-align: center; padding: 24px 16px; margin-top: auto; font-size: 12px; color: var(--text-secondary); letter-spacing: 0.5px; opacity: 0.6;">
+        <a href="ABOUT.html" style="color: inherit; text-decoration: none;">&copy; 2026 Shensi-ST / 天算AI实验室 保留所有权利. Powered by V7 Agent Framework.</a>
+    </footer>
+
+    <!-- Core Logic Injection -->
+    <script src="app.js"></script>
+</body>
+</html>
